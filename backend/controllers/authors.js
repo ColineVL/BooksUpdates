@@ -1,3 +1,8 @@
+const fetch = require('node-fetch');
+const Bluebird = require('bluebird');
+
+fetch.Promise = Bluebird;
+
 module.exports = {
   getFavorites,
   searchAuthor,
@@ -14,5 +19,11 @@ function getFavorites() {
 }
 
 function searchAuthor(name) {
-  return Promise.resolve(name);
+  const endpoint = 'https://data.bnf.fr/sparql';
+  const query = 'select * {?s ?p ?o} limit 3';
+  const format = 'application/json';
+  const fullRequest = `${endpoint}?query=${encodeURI(query)}&format=${format}`;
+
+  return fetch(fullRequest)
+    .then((res) => res.json());
 }
