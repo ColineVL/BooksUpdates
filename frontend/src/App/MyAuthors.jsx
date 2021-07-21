@@ -14,7 +14,10 @@ class MyAuthors extends Component {
     fetch('http://localhost:3001/players/list')
       .then((response) => response.json())
       .then((responseJson) => {
-        this.setState({ players: responseJson.data, list: true });
+        this.setState({
+          players: responseJson.data,
+          list: true,
+        });
       });
   }
 

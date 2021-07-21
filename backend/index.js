@@ -1,7 +1,8 @@
 // LIBRARIES
-const express = require("express");
+const express = require('express');
+
 const app = express();
-const cors = require("cors");
+const cors = require('cors');
 const bodyParser = require('body-parser');
 
 // PORT
@@ -13,14 +14,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // ROUTERS
-app.use("/players", require("./routes/players"));
+app.use('/authors', require('./routes/authors'));
 
 app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
+  res.send('Hello World!');
+});
 
 // BEGIN
 app.listen(port, () => {
-    console.log("Runnning on " + port);
+  // eslint-disable-next-line no-console
+  console.log(`Runnning on ${port}`);
 });
 module.exports = app;
