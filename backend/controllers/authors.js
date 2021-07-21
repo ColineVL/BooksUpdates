@@ -1,7 +1,14 @@
+// Libraries
 const fetch = require('node-fetch');
 const Bluebird = require('bluebird');
+// Requests
+const requests = require('../requests/authors');
 
 fetch.Promise = Bluebird;
+
+// CONSTANTS
+const ENDPOINT = 'https://data.bnf.fr/sparql';
+const FORMAT = 'application/json';
 
 module.exports = {
   getFavorites,
@@ -19,11 +26,8 @@ function getFavorites() {
 }
 
 function searchAuthor(name) {
-  const endpoint = 'https://data.bnf.fr/sparql';
-  const query = 'select * {?s ?p ?o} limit 3';
-  const format = 'application/json';
-  const fullRequest = `${endpoint}?query=${encodeURI(query)}&format=${format}`;
-
+  const query = requests.getLinkBirthDeath(name);
+  const fullRequest = `${ENDPOINT}?query=${encodeURI(query)}&format=${FORMAT}`;
   return fetch(fullRequest)
     .then((res) => res.json());
 }
