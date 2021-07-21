@@ -19,6 +19,7 @@
     ],
     "rules": {
         "react/destructuring-assignment": "off",
-        "react/prefer-stateless-function": [1]
+        "react/prefer-stateless-function": [1],
+        "import/prefer-default-export": "off"
     }
 }
