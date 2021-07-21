@@ -8,8 +8,12 @@ router.get('/', async (req, res) => {
   res.send('home page authors');
 });
 
+/**
+ * Searches on the BNF data the list of authors with a given name.
+ * @param {String} req.query.name Name of the author you are looking for
+ */
 router.get('/search', (req, res) => {
-  authorsController.searchAuthor(req.body.name)
+  authorsController.searchAuthor(req.query.name)
     .then((result) => {
       res.status(200).json({
         data: result,
