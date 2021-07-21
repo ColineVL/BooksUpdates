@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Container } from 'semantic-ui-react';
 
 class HomePage extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class HomePage extends Component {
 
   render() {
     return (
-      <div className="container">
+      <Container>
         {this.state.list ? (
           <div className="list-group">
             {this.state.players.map((player) => (
@@ -31,7 +32,8 @@ class HomePage extends Component {
             ))}
           </div>
         ) : null}
-      </div>
+      </Container>
+
     );
   }
 }
