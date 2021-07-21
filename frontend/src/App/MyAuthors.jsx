@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Container } from 'semantic-ui-react';
 
-class HomePage extends Component {
+class MyAuthors extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -38,4 +38,4 @@ class HomePage extends Component {
   }
 }
 
-export { HomePage };
+export { MyAuthors };

@@ -17,17 +17,23 @@ class NavBar extends Component {
 
         <Segment inverted>
           <Menu inverted secondary>
-            <Menu.Item header>Books Updates</Menu.Item>
+            <Menu.Item header href="/">Books Updates</Menu.Item>
             <Menu.Item
-              name="home"
-              active={activeItem === 'home'}
+              href="searchAnAuthor"
+              name="search"
+              active={activeItem === 'search'}
               onClick={this.handleItemClick}
-            />
+            >
+              Chercher un auteur
+            </Menu.Item>
             <Menu.Item
+              href="myAuthors"
               name="list"
               active={activeItem === 'list'}
               onClick={this.handleItemClick}
-            />
+            >
+              Voir ma liste d&apos;auteurs
+            </Menu.Item>
           </Menu>
         </Segment>
 
