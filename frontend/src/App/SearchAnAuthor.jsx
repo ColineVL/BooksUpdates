@@ -34,9 +34,9 @@ class SearchAnAuthor extends Component {
       const renderBodyRow = ({
           link, name, birth, death,
       }, i) => ({
-          key: name || `row-${i}`,
+          key: link || `row-${i}`,
           cells: [
-              link?.value || 'No name specified',
+              link?.value,
               name?.value,
               birth?.value,
               death?.value,
