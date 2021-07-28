@@ -21,18 +21,19 @@ class FormAuthorName extends Component {
     handleChange = (e, { name, value }) => this.setState({ [name]: value })
 
     render() {
+        const { name } = this.state;
         return (
-            <Form onSubmit={() => this.props.handleSubmit(this.state.name)}>
+            <Form onSubmit={() => this.props.handleSubmit(name)}>
                 <Form.Group>
                     <Form.Input
                         inline
                         placeholder={"Nom de l'auteur"}
                         name="name"
-                        value={this.state.name}
+                        value={name}
                         onChange={this.handleChange}
                         label={"Nom de l'auteur"}
                     />
-                    <Form.Button type="submit">Chercher</Form.Button>
+                    <Form.Button type="submit" disabled={name === ''}>Chercher</Form.Button>
                 </Form.Group>
             </Form>
         );

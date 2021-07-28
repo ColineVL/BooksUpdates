@@ -62,9 +62,13 @@ class SearchAnAuthor extends Component {
                     </Header.Subheader>
                 </Header>
 
-                <SearchResultTable
-                    tableValues={this.state.listAuthors.results}
-                />
+                {
+                    this.state.loaded && (
+                        <SearchResultTable
+                            tableValues={this.state.listAuthors.results}
+                        />
+                    )
+                }
 
             </Container>
 
