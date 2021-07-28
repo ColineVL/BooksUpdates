@@ -19,8 +19,25 @@
         "react"
     ],
     "rules": {
+        "indent": ["error", 4],
         "react/destructuring-assignment": "off",
         "react/prefer-stateless-function": [1],
-        "import/prefer-default-export": "off"
+        "import/prefer-default-export": "off",
+        "jsx-a11y/label-has-associated-control": [ "error", {
+            "required": {
+                "some": [ "nesting", "id"  ]
+            }
+        }],
+        "jsx-a11y/label-has-for": [ "error", {
+            "required": {
+                "some": [ "nesting", "id"  ]
+            }
+        }],
+        "no-mixed-spaces-and-tabs":  ["warn","smart-tabs"],
+        "react/jsx-indent": "off",
+        "react/jsx-indent-props": "off",
+        "prefer-promise-reject-errors": "off",
+        "react/prop-types": 1,
+        "max-len": ["warn", {"code":  200, "comments":  200}]
     }
 }
