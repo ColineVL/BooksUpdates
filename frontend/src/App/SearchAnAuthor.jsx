@@ -1,84 +1,75 @@
+// Libraries
 import React, { Component } from 'react';
 import {
-    Container, Form, Segment, Table,
+    Container, Divider, Header,
 } from 'semantic-ui-react';
+
+// Components
+import { SearchResultTable, FormAuthorName } from '../Components';
+
+// Controllers
 import { searchAuthor } from '../controllers/authors';
 
+/**
+ * Page to search for an author based on his or her name.
+ * Includes a form to enter the name, and the table with all the results.
+ */
 class SearchAnAuthor extends Component {
     constructor(props) {
         super(props);
+        this.handleSubmitSearchAuthor = this.handleSubmitSearchAuthor.bind(this);
         this.state = {
+            // The name of the author.
             name: '',
+            // True when we have an answer from the backend. While it is false, we do not show the results table.
+            loaded: false,
+            // The result of the search.
             listAuthors: [],
-            tableLoaded: false,
         };
     }
 
-    handleChange = (e, { name, value }) => this.setState({ [name]: value })
-
-    handleSubmitSearchAuthor = () => {
-        const { name } = this.state;
+    /**
+     * Executes when the form is completed. Takes the name entered by the user, and sends a request to the backend.
+     * When the answer is received, updates the state with the info.
+     * @param name
+     */
+    handleSubmitSearchAuthor = (name) => {
         searchAuthor(name)
             .then((response) => {
                 this.setState({
                     listAuthors: response.data,
-                    tableLoaded: true,
+                    loaded: true,
+                    name,
                 });
             });
     }
 
-  printResultTable = () => {
-      const tableData = this.state.listAuthors.results;
-      const headerRow = ['Link', 'Name', 'Birth', 'Death'];
+    render() {
+        return (
+            <Container>
+                <Header as="h3">Cherchez un auteur</Header>
 
-      const renderBodyRow = ({
-          link, name, birth, death,
-      }, i) => ({
-          key: link || `row-${i}`,
-          cells: [
-              link?.value,
-              name?.value,
-              birth?.value,
-              death?.value,
-          ],
-      });
+                <FormAuthorName handleSubmit={this.handleSubmitSearchAuthor} />
 
-      return (
-          <Table
-              celled
-              headerRow={headerRow}
-              renderBodyRow={renderBodyRow}
-              tableData={tableData}
-          />
-      );
-  }
+                <Divider />
 
-  render() {
-      const { name } = this.state;
+                <Header as="h3">
+                    Résultats de la recherche
+                    <Header.Subheader>
+                        {this.state.loaded
+                            ? `Résultats pour "${this.state.name}"`
+                            : 'En attente de la recherche'}
+                    </Header.Subheader>
+                </Header>
 
-      return (
-          <Container>
-              <Form onSubmit={this.handleSubmitSearchAuthor}>
-                  <Form.Group>
-                      <Form.Input
-                          inline
-                          placeholder={"Nom de l'auteur"}
-                          name="name"
-                          value={name}
-                          onChange={this.handleChange}
-                          label={"Nom de l'auteur"}
-                      />
-                      <Form.Button type="submit">Chercher</Form.Button>
-                  </Form.Group>
-              </Form>
+                <SearchResultTable
+                    tableValues={this.state.listAuthors.results}
+                />
 
-              <Segment>Work in progress</Segment>
-              {this.state.tableLoaded && this.printResultTable()}
+            </Container>
 
-          </Container>
-
-      );
-  }
+        );
+    }
 }
 
 export { SearchAnAuthor };

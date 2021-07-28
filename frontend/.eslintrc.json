@@ -36,6 +36,8 @@
         "no-mixed-spaces-and-tabs":  ["warn","smart-tabs"],
         "react/jsx-indent": "off",
         "react/jsx-indent-props": "off",
-        "prefer-promise-reject-errors": "off"
+        "prefer-promise-reject-errors": "off",
+        "react/prop-types": 1,
+        "max-len": ["warn", {"code":  200, "comments":  200}]
     }
 }
