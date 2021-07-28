@@ -9,22 +9,31 @@ import { Table, Header, Icon } from 'semantic-ui-react';
 function SearchResultTable(props) {
     if (props.tableValues && props.tableValues.length > 0) {
         const tableData = props.tableValues;
-        const headerRow = ['Link', 'Name', 'Birth', 'Death'];
+        const headerRow = ['Nom', 'Date de naissance', 'Date de décès', 'Lien BNF'];
 
         const renderBodyRow = ({
             link, name, birth, death,
         }, i) => ({
-            key: link || `row-${i}`,
+            key: link?.value || `row-${i}`,
             cells: [
-                link?.value,
-                name?.value,
-                birth?.value,
-                death?.value,
+                { key: 'name', content: name?.value || 'Pas de nom' },
+                { key: 'birth', content: birth?.value || 'Pas de date' },
+                { key: 'death', content: death?.value || 'Pas de date' },
+                {
+                    key: 'link',
+                    collapsing: true,
+                    content: (
+                        <a href={link?.value} target="_blank" rel="noreferrer">
+                            <Icon name="linkify" />
+                        </a>
+                    ),
+                },
             ],
         });
         return (
             <Table
                 celled
+                selectable
                 headerRow={headerRow}
                 renderBodyRow={renderBodyRow}
                 tableData={tableData}
