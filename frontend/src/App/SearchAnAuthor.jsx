@@ -65,7 +65,7 @@ class SearchAnAuthor extends Component {
                 {
                     this.state.loaded && (
                         <SearchResultTable
-                            tableValues={this.state.listAuthors.results}
+                            tableValues={this.state.listAuthors}
                         />
                     )
                 }

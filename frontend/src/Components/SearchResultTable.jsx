@@ -9,25 +9,33 @@ import { Table, Header, Icon } from 'semantic-ui-react';
 function SearchResultTable(props) {
     if (props.tableValues && props.tableValues.length > 0) {
         const tableData = props.tableValues;
-        const headerRow = ['Nom', 'Date de naissance', 'Date de décès', 'Lien BNF'];
+        const headerRow = ['Nom', 'Date de naissance', 'Date de décès', 'Lien BNF', 'Favori'];
 
         const renderBodyRow = ({
-            link, name, birth, death,
+            link, name, birth, death, favorite,
         }, i) => ({
-            key: link?.value || `row-${i}`,
+            key: link || `row-${i}`,
             cells: [
-                { key: 'name', content: name?.value || 'Pas de nom' },
-                { key: 'birth', content: birth?.value || 'Pas de date' },
-                { key: 'death', content: death?.value || 'Pas de date' },
+                { key: 'name', content: name || 'Pas de nom' },
+                { key: 'birth', content: birth || 'Pas de date' },
+                { key: 'death', content: death || 'Pas de date' },
                 {
                     key: 'link',
                     collapsing: true,
                     content: (
-                        <a href={link?.value} target="_blank" rel="noreferrer">
+                        <a href={link} target="_blank" rel="noreferrer">
                             <Icon name="linkify" />
                         </a>
                     ),
                 },
+                {
+                    key: 'fav',
+                    collapsing: true,
+                    content: favorite
+                        ? <Icon name="star" color="yellow" link />
+                        : <Icon name="star outline" link />,
+                },
+                // TODO clicking on the star, we should be able to add an author to the favorites (or remove from)
             ],
         });
         return (

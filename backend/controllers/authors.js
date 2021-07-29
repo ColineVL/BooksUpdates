@@ -35,18 +35,33 @@ function getFavorites() {
 /**
  * Gets a name, looks up on the BNF which authors have that name, and returns the list of
  * the authors with the link of their page on the BNF, their date of birth and their date of death.
+ * Checks if they are in the database, and if they are favorites.
  * @param {String} name The name of the author you are looking for
- * @return {Promise<{vars: String[], results: Array<{}>}>}
+ * @return {Promise<Array<{link: String, name: String, death: String, birth: String, favorite: Boolean}>>}
  */
 function searchAuthor(name) {
     const query = requests.getLinkBirthDeath(name);
     const fullRequest = `${ENDPOINT}?query=${encodeURI(query)}&format=${FORMAT}`;
     return fetch(fullRequest)
         .then((res) => res.json())
-        .then((json) => ({
-            vars: json.head.vars,
-            results: json.results.bindings,
-        }));
+        .then((json) => {
+            // We extract what is interesting
+            const list = json.results.bindings;
+            // We create the array with all the requests : we are going to look in the database
+            // if there are the authors we found on the BNF (and if they are some favorites).
+            const promisesArray = list.map((obj) => Author.findOne({ link: obj.link.value, favorite: true }));
+            return Promise.all(promisesArray)
+                .then((resultRequest) => {
+                    const result = resultRequest.map((res, index) => ({
+                        link: list[index].link.value,
+                        name: list[index].name ? list[index].name.value : undefined,
+                        birth: list[index].birth ? list[index].birth.value : undefined,
+                        death: list[index].death ? list[index].death.value : undefined,
+                        favorite: !!res,
+                    }));
+                    return Promise.resolve(result);
+                });
+        });
 }
 
 /**
