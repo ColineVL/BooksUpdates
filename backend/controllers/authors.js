@@ -1,6 +1,12 @@
 // Libraries
 const fetch = require('node-fetch');
 const Bluebird = require('bluebird');
+const db = require('mongoose');
+db.Promise = require('bluebird');
+
+// Mongo
+const Author = db.model('Author');
+
 // Requests
 const requests = require('../requests/authors');
 
@@ -11,18 +17,19 @@ const ENDPOINT = 'https://data.bnf.fr/sparql';
 const FORMAT = 'application/json';
 
 module.exports = {
-  getFavorites,
-  searchAuthor,
+    getFavorites,
+    searchAuthor,
+    upsertAuthorToDb,
 };
 
 function getFavorites() {
-  return Promise.resolve(
-    [
-      { _id: 1, name: 'Sachin', runs: '18426' },
-      { _id: 2, name: 'Dhoni', runs: '10500' },
-      { _id: 3, name: 'Virate', runs: '10843' },
-    ],
-  );
+    return Promise.resolve(
+        [
+            { _id: 1, name: 'Sachin', runs: '18426' },
+            { _id: 2, name: 'Dhoni', runs: '10500' },
+            { _id: 3, name: 'Virate', runs: '10843' },
+        ],
+    );
 }
 
 /**
@@ -32,12 +39,25 @@ function getFavorites() {
  * @return {Promise<{vars: String[], results: Array<{}>}>}
  */
 function searchAuthor(name) {
-  const query = requests.getLinkBirthDeath(name);
-  const fullRequest = `${ENDPOINT}?query=${encodeURI(query)}&format=${FORMAT}`;
-  return fetch(fullRequest)
-    .then((res) => res.json())
-    .then((json) => ({
-      vars: json.head.vars,
-      results: json.results.bindings,
-    }));
+    const query = requests.getLinkBirthDeath(name);
+    const fullRequest = `${ENDPOINT}?query=${encodeURI(query)}&format=${FORMAT}`;
+    return fetch(fullRequest)
+        .then((res) => res.json())
+        .then((json) => ({
+            vars: json.head.vars,
+            results: json.results.bindings,
+        }));
+}
+
+/**
+ * Upserts an author to the database. Looks if the author already exists based on the BNF link.
+ * @param {String} authorData.link The BNF link of the author
+ * @param {String} authorData.name The author's name
+ * @param {Boolean} authorData.favorite True if the author is a favorite, false otherwise
+ */
+function upsertAuthorToDb(authorData) {
+    const filter = {
+        link: authorData.link,
+    };
+    return Author.updateOne(filter, authorData, { upsert: true });
 }
