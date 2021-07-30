@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Table, Header, Icon } from 'semantic-ui-react';
 
+// Components
+import { IconFavorite } from './IconFavorite';
+
 /**
  * A Semantic table, simplified for this project. If there are no values to display, shows an error message.
  */
@@ -31,11 +34,13 @@ function SearchResultTable(props) {
                 {
                     key: 'fav',
                     collapsing: true,
-                    content: favorite
-                        ? <Icon name="star" color="yellow" link />
-                        : <Icon name="star outline" link />,
+                    content: (<IconFavorite
+                        authorInfo={{
+                            link, name, birth, death,
+                        }}
+                        favorite={favorite}
+                    />),
                 },
-                // TODO clicking on the star, we should be able to add an author to the favorites (or remove from)
             ],
         });
         return (

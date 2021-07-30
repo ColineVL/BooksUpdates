@@ -1,13 +1,19 @@
-import { customFetch } from '../helpers/fetch';
+import { customFetchGET, customFetchPOST } from '../helpers/fetch';
 
 function searchAuthor(name) {
     const URL = '/authors/search';
     const params = {
         name,
     };
-    return customFetch(URL, params);
+    return customFetchGET(URL, params);
+}
+
+function upsertAuthor(authorInfo) {
+    const URL = '/authors/upsert';
+    return customFetchPOST(URL, authorInfo, 'POST');
 }
 
 export {
     searchAuthor,
+    upsertAuthor,
 };
