@@ -13,6 +13,7 @@
     "rules": {
         "no-use-before-define": "off",
         "indent": ["error", 4],
-        "max-len": ["warn", {"code":  200, "comments":  200}]
+        "max-len": ["warn", {"code":  200, "comments":  200}],
+        "linebreak-style": 0
     }
 }
