@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import { NavBar } from '../Components';
-import { HomePage, SearchAnAuthor, MyAuthors } from '.';
+import { HomePage, SearchAnAuthor, MyFavoriteAuthors } from '.';
 
 function App() {
     return (
@@ -10,7 +10,7 @@ function App() {
             <Switch>
                 <Route exact path="/" component={HomePage} />
                 <Route path="/searchAnAuthor" component={SearchAnAuthor} />
-                <Route path="/myAuthors" component={MyAuthors} />
+                <Route path="/myFavoriteAuthors" component={MyFavoriteAuthors} />
             </Switch>
         </Router>
     );

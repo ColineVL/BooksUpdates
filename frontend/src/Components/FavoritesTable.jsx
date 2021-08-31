@@ -3,48 +3,46 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Table, Header, Icon } from 'semantic-ui-react';
 
-// Components
-import { IconFavorite } from './IconFavorite';
-
 /**
  * A Semantic table, simplified for this project. If there are no values to display, shows an error message.
  */
-function SearchResultTable(props) {
+function FavoritesTable(props) {
     if (props.tableValues && props.tableValues.length > 0) {
         const tableData = props.tableValues;
-        const headerRow = ['Nom', 'Date de naissance', 'Date de décès', 'Lien BNF', 'Favori'];
+        const headerRow = ['Lien BNF', 'Nom', 'Voir les oeuvres'];
 
         const renderBodyRow = ({
-            link, name, birth, death, favorite,
+            link, name,
         }, i) => ({
             key: link || `row-${i}`,
             cells: [
-                { key: 'name', content: name || 'Pas de nom' },
-                { key: 'birth', content: birth || 'Pas de date' },
-                { key: 'death', content: death || 'Pas de date' },
                 {
                     key: 'link',
                     collapsing: true,
+                    textAlign: 'center',
                     content: (
                         <a href={link} target="_blank" rel="noreferrer">
                             <Icon name="linkify" />
                         </a>
                     ),
                 },
+                { key: 'name', content: name || 'Pas de nom' },
                 {
-                    key: 'fav',
+                    key: 'books',
                     collapsing: true,
-                    content: (<IconFavorite
-                        authorInfo={{
-                            link, name, birth, death,
-                        }}
-                        favorite={favorite}
-                    />),
+                    textAlign: 'center',
+                    content: (
+                        // TODO modifier link ici, on veut avoir la liste des livres écrits par l'auteur
+                        <a href={link} target="_blank" rel="noreferrer">
+                            <Icon name="book" />
+                        </a>
+                    ),
                 },
             ],
         });
         return (
             <Table
+                singleLine
                 celled
                 selectable
                 headerRow={headerRow}
@@ -58,24 +56,22 @@ function SearchResultTable(props) {
             <Icon name="frown outline" />
                 Aucun résultat
             <Header.Subheader>
-                    Réessayez en faisant bien attention à la casse.
+                    Cherchez un auteur pour l&apos;ajouter en favori.
             </Header.Subheader>
         </Header>
     );
 }
 
-SearchResultTable.propTypes = {
+FavoritesTable.propTypes = {
     // The values to display in the table
     tableValues: PropTypes.arrayOf(PropTypes.shape({
         name: PropTypes.string.isRequired,
-        birth: PropTypes.string,
-        death: PropTypes.string,
         link: PropTypes.string.isRequired,
     })),
 };
 
-SearchResultTable.defaultProps = {
+FavoritesTable.defaultProps = {
     tableValues: [],
 };
 
-export { SearchResultTable };
+export { FavoritesTable };

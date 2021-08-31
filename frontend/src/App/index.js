@@ -1,3 +1,3 @@
 export * from './SearchAnAuthor';
-export * from './MyAuthors';
+export * from './MyFavoriteAuthors';
 export * from './HomePage';
