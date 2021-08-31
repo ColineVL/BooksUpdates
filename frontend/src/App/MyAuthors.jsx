@@ -1,22 +1,33 @@
+// Libraries
 import React, { Component } from 'react';
-import { Container } from 'semantic-ui-react';
+import {
+    Container, Header,
+} from 'semantic-ui-react';
 
+// Components
+import { FavoritesTable } from '../Components';
+
+/**
+ * All the favorite authors in the database, with links to their pages on the BNF website.
+ */
 class MyAuthors extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            list: false,
-            players: [],
+            // True when we have an answer from the backend. While it is false, we do not show the results table.
+            loaded: false,
+            // The list to display.
+            listAuthors: [],
         };
     }
 
     componentDidMount() {
-        fetch('http://localhost:3001/players/list')
+        fetch('http://localhost:3001/authors/favorites')
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
-                    players: responseJson.data,
-                    list: true,
+                    listAuthors: responseJson.data,
+                    loaded: true,
                 });
             });
     }
@@ -24,19 +35,15 @@ class MyAuthors extends Component {
     render() {
         return (
             <Container>
-                {this.state.list ? (
-                    <div className="list-group">
-                        {this.state.players.map((player) => (
-                            <li
-                                className="list-group-item list-group-item-action"
-                            >
-                                {player.name}
-                            </li>
-                        ))}
-                    </div>
-                ) : null}
+                <Header as="h3">Auteurs favoris</Header>
+                {
+                    this.state.loaded && (
+                        <FavoritesTable
+                            tableValues={this.state.listAuthors}
+                        />
+                    )
+                }
             </Container>
-
         );
     }
 }

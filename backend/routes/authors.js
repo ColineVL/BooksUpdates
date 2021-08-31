@@ -21,7 +21,7 @@ router.get('/search', (req, res) => {
         })
         .catch((err) => {
             res.status(400).json({
-                message: 'Some error occured',
+                message: 'Error in searching an author',
                 err,
             });
         });
@@ -40,12 +40,15 @@ router.post('/upsert', (req, res) => {
         })
         .catch((err) => {
             res.status(400).json({
-                message: 'Some error occured',
+                message: 'Error in updating an author',
                 err,
             });
         });
 });
 
+/**
+ * Gets all the favorite authors in the database.
+ */
 router.get('/favorites', (req, res) => {
     authorsController.getFavorites()
         .then((result) => {
@@ -55,7 +58,7 @@ router.get('/favorites', (req, res) => {
         })
         .catch((err) => {
             res.status(400).json({
-                message: 'Some error occured',
+                message: 'Error in getting favorite authors',
                 err,
             });
         });

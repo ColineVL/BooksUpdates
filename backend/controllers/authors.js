@@ -22,14 +22,12 @@ module.exports = {
     upsertAuthorToDb,
 };
 
+/**
+ * Gets all the favorite authors in the database, with their name and their link.
+ * @return {Promise<Array<{link: String, name: String}>>}
+ */
 function getFavorites() {
-    return Promise.resolve(
-        [
-            { _id: 1, name: 'Sachin', runs: '18426' },
-            { _id: 2, name: 'Dhoni', runs: '10500' },
-            { _id: 3, name: 'Virate', runs: '10843' },
-        ],
-    );
+    return Author.aggregate(requests.getFavorites());
 }
 
 /**
