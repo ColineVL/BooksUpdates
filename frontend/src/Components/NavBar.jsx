@@ -27,7 +27,7 @@ class NavBar extends Component {
               Chercher un auteur
                     </Menu.Item>
                     <Menu.Item
-                        href="myAuthors"
+                        href="myFavoriteAuthors"
                         name="list"
                         active={activeItem === 'list'}
                         onClick={this.handleItemClick}

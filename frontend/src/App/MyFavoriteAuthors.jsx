@@ -10,7 +10,7 @@ import { FavoritesTable } from '../Components';
 /**
  * All the favorite authors in the database, with links to their pages on the BNF website.
  */
-class MyAuthors extends Component {
+class MyFavoriteAuthors extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -48,4 +48,4 @@ class MyAuthors extends Component {
     }
 }
 
-export { MyAuthors };
+export { MyFavoriteAuthors };
