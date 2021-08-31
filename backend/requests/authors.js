@@ -37,6 +37,8 @@ function getFavorites() {
                 link: true,
                 name: true,
                 _id: 0,
+                // TODO this will have to change with a real id
+                id: '$_id',
             },
         },
     ];

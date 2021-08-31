@@ -12,7 +12,7 @@ function FavoritesTable(props) {
         const headerRow = ['Lien BNF', 'Nom', 'Voir les oeuvres'];
 
         const renderBodyRow = ({
-            link, name,
+            link, name, id,
         }, i) => ({
             key: link || `row-${i}`,
             cells: [
@@ -32,8 +32,8 @@ function FavoritesTable(props) {
                     collapsing: true,
                     textAlign: 'center',
                     content: (
-                        // TODO modifier link ici, on veut avoir la liste des livres écrits par l'auteur
-                        <a href={link} target="_blank" rel="noreferrer">
+                        // TODO then we have a problem if we click on a link in the navbar
+                        <a href={`authorDescription/${id}`}>
                             <Icon name="book" />
                         </a>
                     ),
@@ -67,6 +67,7 @@ FavoritesTable.propTypes = {
     tableValues: PropTypes.arrayOf(PropTypes.shape({
         name: PropTypes.string.isRequired,
         link: PropTypes.string.isRequired,
+        id: PropTypes.string.isRequired,
     })),
 };
 
