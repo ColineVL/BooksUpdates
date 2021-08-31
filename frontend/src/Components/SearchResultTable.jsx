@@ -66,8 +66,12 @@ function SearchResultTable(props) {
 
 SearchResultTable.propTypes = {
     // The values to display in the table
-    // TODO specify what is in the array. Define a format ?
-    tableValues: PropTypes.arrayOf(PropTypes.object),
+    tableValues: PropTypes.arrayOf(PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        birth: PropTypes.string,
+        death: PropTypes.string,
+        link: PropTypes.string.isRequired,
+    })),
 };
 
 SearchResultTable.defaultProps = {
